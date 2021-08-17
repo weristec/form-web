@@ -1,0 +1,5 @@
+package org.senai.dao;
+
+public class PessoaDao {
+
+}
