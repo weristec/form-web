@@ -92,26 +92,44 @@ public class CadastroServelet extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		Pessoa objP = new Pessoa();
-
-		objP.setNomeCompleto(req.getParameter("nome"));
-		objP.setTelefone(req.getParameter("tel"));
-		objP.setDtNascimento(req.getParameter("nasc"));
-		objP.setEmail(req.getParameter("email"));
-		objP.setSexo(req.getParameter("sexo"));
-		objP.setTecnologia(req.getParameterValues("tecnologia"));
-		objP.setEscolaridade(req.getParameter("escolaridade"));
+		String acao = req.getParameter("acao");
 		
+		if (acao != null && acao.equals("apagar")) {
+			objP.setId(Integer.parseInt(req.getParameter("id")));
+		} else {
+			objP.setNomeCompleto(req.getParameter("nome"));
+			objP.setTelefone(req.getParameter("tel"));
+			objP.setDtNascimento(req.getParameter("nasc"));
+			objP.setEmail(req.getParameter("email"));
+			objP.setSexo(req.getParameter("sexo"));
+			objP.setTecnologia(req.getParameterValues("tecnologia"));
+			objP.setEscolaridade(req.getParameter("escolaridade"));
+			objP.setId(Integer.parseInt(req.getParameter("id")));
+		}
 
 		PessoaDao objDao = new PessoaDao();
 		
-		if(objDao.adicionar(objP)) {
+		boolean validar = false;
+
+		if (objP.getId() > 0) {
+			if (acao != null && acao.equals("apagar")) {
+				validar = objDao.apagar(objP.getId());
+			} else {
+				validar = objDao.alterar(objP);
+			}
+		} else {
+			validar = objDao.adicionar(objP);
+		}
+
+		if (validar) {
 			res.sendRedirect("listaPessoas.jsp");
-		}else {
+		} else {
 			PrintWriter saida = res.getWriter();
 			saida.println("<html>");
 			saida.println("Erro ao gravar.");
 			saida.println("</html>");
 		}
+
 
 	}
 

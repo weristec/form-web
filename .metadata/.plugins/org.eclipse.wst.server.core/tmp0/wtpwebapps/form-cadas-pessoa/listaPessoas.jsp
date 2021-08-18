@@ -16,23 +16,27 @@
 <body>
 
 	<%
-	try{
 	PessoaDao objDao = new PessoaDao();
 	List<Pessoa> ls = objDao.listaPessoa();
 	if (ls.size() > 0) {
 	%>
 	<table>
 		<tr>
+			<th>ID</th>
 			<th>Nome</th>
 			<th>E-mail</th>
+			<th>Ação</th>
 		</tr>
 
 		<%
 		for (Pessoa p : ls) {
 		%>
 		<tr>
+			<td><%=p.getId()%></td>
 			<td><%=p.getNomeCompleto()%></td>
 			<td><%=p.getEmail()%></td>
+			<td><a href="form-cadastro.jsp?id=<%=p.getId()%>" >Editar</a>
+			<a href="cadastro?acao=apagar&id=<%=p.getId()%>" >Apagar</a></td>
 		</tr>
 		<%
 		}
@@ -40,11 +44,9 @@
 
 	</table>
 	<%
-	
-	}
-	}catch(Exception e){
-		e.printStackTrace();
 	}
 	%>
+	<br>
+	<a href="index.jsp" style="float: right;">Index</a>
 </body>
 </html>

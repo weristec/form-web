@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +7,15 @@
 <title>Primeira Página JSP</title>
 </head>
 <body>
-Primeira página JSP<br>
-<%
+	<%
 	String app = request.getParameter("app");
-	out.print("Aqui é um conteúdo "+app);
-%>
+	if (app == null)
+		app = "JSP";
+	out.print("Aqui é um conteudo " + app);
+	%>
+	<br>
+	<a href="form-cadastro.jsp">Novo Cadastro</a>
+	<br>
+	<a href="listaPessoas.jsp">Lista de Pessoas</a>
 </body>
 </html>

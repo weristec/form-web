@@ -1,0 +1,569 @@
+2 conexao
+29 formulario
+127 servlets
+285 DAO
+437 Heranca->Model
+518 Saida de Dados
+//conexao
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class Conexao {
+	public static Connection conectar() {
+		try {
+			Class.forName("org.postgresql.Driver");
+			String url = "jdbc:postgresql://chunee.db.elephantsql.com:5432/wbuhhaks";
+			String usuarioDb = "wbuhhaks";
+			String senhaDb = "a0p5pPiSOLKrxzPs0yj5BggNfrSUGfQJ";
+			return DriverManager.getConnection(url, usuarioDb, senhaDb);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("Erro de conexão");
+			e.printStackTrace();
+			return null;
+			
+		}
+		
+	}
+}
+
+PreparedStatement pst = ((java.sql.Connection) cont).prepareStatement(sql);
+
+//formulario
+<%@page import="org.senai.dao.PessoaDao"%>
+<%@page import="org.senai.model.Pessoa"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/estilo.css">
+
+    <style>
+        .bloco-inline label,
+        .bloco-inline input,
+        .bloco-inline * {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+	<body>
+	<%
+	Pessoa p = new Pessoa();
+	try {
+		int id = Integer.parseInt(request.getParameter("id"));
+		PessoaDao dao = new PessoaDao();
+		p = dao.getPessoa(id);
+	} catch (Exception e) {
+	}
+	//out.print(id);
+	%>
+    <form action="cadastro">
+        <fieldset>
+            <legend>CADASTRO</legend>
+            <img id="img-java" src="img/java.png" alt="imagem java">
+            <label for="nome">Nome Completo:</label>
+            <input class="larguraTexto" type="text" id="nome" name="nome"
+                placeholder="Digite seu nome completo" value="<%=p.getNomeCompleto()%>">
+                
+            <label for="telefone">Telefone:</label>
+            <input class="larguraTexto" type="text" placeholder="(61)9.9999-9999"
+            	 id="tel" name="tel" value="<%=p.getTelefone()%>">
+            	 
+            <label for="dtNascimento">Data de Nascimento:</label>
+            <input class="larguraTexto" type="date" 
+            	 id="nasc" name="nasc" value="<%=p.getDtNascimento()%>"> 
+            
+            <label for="email">E-mail:</label>
+            <input class="larguraTexto" type="email" id="email"
+            	name="email" value="<%=p.getEmail()%>">
+            
+            <label for="sexo">Sexo:</label>
+            <div class="bloco-inline">
+                <input type="radio" id="masc" name="sexo" value="m"> <label for="masc"> Masculino</label>
+                <input type="radio" id="fem" name="sexo" value="f"> <label for="fem"> Feminino</label>
+            </div>
+            
+            <label for="">Tecnologias:</label>
+            <div class="bloco-inline">
+                <input type="checkbox" id="html" name="tecnologia" value="html"> <label for="html"> HTML</label>
+                <input type="checkbox" id="css" name="tecnologia" value="css"><label for="css"> CSS</label>
+                <input type="checkbox" id="java" name="tecnologia" value="java"><label for="java"> Java</label>
+                <input type="checkbox" id="php" name="tecnologia" value="php"><label for="php"> PHP</label>
+            </div>
+            
+            <label for="">Escolaridade:</label>
+            <select name="escolaridade" id="escolaridade">
+                <option value="">Selecione</option>
+                <option value="Fundamental">Fundamental</option>
+                <option value="Ensino Médio">Ensino Médio</option>
+                <option value="Superior">Superior</option>
+            </select>
+            
+            <input type="submit" class="bt" value="Enviar">
+            <input type="reset" class="bt" value="Limpar">
+        </fieldset>
+    </form>
+    <script type="text/javascript">
+		var lsSexo = document.getElementsByName("sexo");
+		for (i in lsSexo) {
+			if (lsSexo[i].value == '<%=p.getSexo()%>') {
+				lsSexo[i].setAttribute('checked', 'checked');
+			}
+		}
+		
+		document.getElementById("escolaridade").value = "<%=p.getEscolaridade()%>";
+	<%
+	for (String t : p.getTecnologia()) {
+	out.println("document.getElementById('" + t + "').setAttribute('checked', 'checked')");
+	}
+	%>
+		
+	</script>
+</body>
+</html>
+
+//servilets
+/*package org.senai.servlet;
+import java.io.IOException;
+
+import java.io.PrintWriter;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.senai.db.Conexao;
+
+import com.sun.jdi.connect.spi.Connection;
+@WebServlet("/cadastro")
+public class CadastroServelet extends HttpServlet{
+	
+	protected void service(HttpServletRequest req, HttpServletResponse res)
+	throws ServletException, IOException{
+		
+		String nome = req.getParameter("nome");
+		String tel = req.getParameter("tel");
+		String nasc = req.getParameter("nasc");
+		
+		String email = req.getParameter("email");
+		String sexo = req.getParameter("sexo");
+		String[] tecnologia = req.getParameterValues("tecnologia");
+		String escolaridade = req.getParameter("escolaridade");
+		
+		PrintWriter saida = res.getWriter() ;
+		saida.println("<html>");
+		saida.println("<body> Nome: "+nome+" Tel: "
+				+tel+ " Nascimento: "+nasc+
+				"Email: "+email+" sexo: "+sexo
+				+" Escolaridade: "+escolaridade+" Tecnologias: ");
+				
+				String lsTecnologia = "";
+				for(String t: tecnologia) {
+					saida.println(t);
+					lsTecnologia+=t+", ";
+				}
+		
+		
+		
+		try {
+			
+			saida.println("Ok para conexão");
+			
+			String sql = "insert into pessoa(nome, tel, nasc, email, sexo, tecnologia, escolaridade) \r\n"
+					+ "values('"+nome+"','"+tel+"','"+nasc+"','"+email+"','"+sexo+"','"+lsTecnologia+"','"+escolaridade+"');";
+			
+			Connection cont = (Connection) Conexao.conectar();
+			
+			if(cont != null) {
+				PreparedStatement pst = ((java.sql.Connection) cont).prepareStatement(sql);
+				pst.execute();
+				pst.close();
+				cont.close();
+			
+				saida.println("Registro gravado. ");
+			}else {
+				saida.println("Erro de conexão. ");
+			}
+			
+		} catch (Exception e) {
+			saida.println("Erro de conexão."+e);
+			
+		}
+		
+		saida.println("</body><html>");
+		
+	}
+}*/
+package org.senai.servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.senai.dao.PessoaDao;
+import org.senai.model.Pessoa;
+
+@WebServlet("/cadastro")
+public class CadastroServelet extends HttpServlet {
+
+	protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+		Pessoa objP = new Pessoa();
+
+		objP.setNomeCompleto(req.getParameter("nome"));
+		objP.setTelefone(req.getParameter("tel"));
+		objP.setDtNascimento(req.getParameter("nasc"));
+		objP.setEmail(req.getParameter("email"));
+		objP.setSexo(req.getParameter("sexo"));
+		objP.setTecnologia(req.getParameterValues("tecnologia"));
+		objP.setEscolaridade(req.getParameter("escolaridade"));
+		
+
+		PessoaDao objDao = new PessoaDao();
+		
+		if(objDao.adicionar(objP)) {
+			res.sendRedirect("listaPessoas.jsp");
+		}else {
+			PrintWriter saida = res.getWriter();
+			saida.println("<html>");
+			saida.println("Erro ao gravar.");
+			saida.println("</html>");
+		}
+
+	}
+
+}
+
+///////////////////////////////////////////////////////////////////////
+
+package org.senai.servlet;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet{
+	protected void service(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException{
+				String loginV = "wr@gmail.com";
+				String senhaV = "2020";
+		
+				String login = req.getParameter("login");
+				String senha = req.getParameter("senha");
+				
+				PrintWriter saida = res.getWriter();
+				saida.println("<html>");
+				
+				if(login.equals(loginV) && senha.equals(senhaV)) {
+					saida.println("Acesso Aprovado");	
+				}else {
+					saida.println("Acesso Reprovado");	
+				}
+				
+				saida.println("</html>");
+			}
+}
+
+
+/////////////////////////////////////////////////////////////////////
+
+//DAO
+
+package org.senai.dao;
+
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.senai.db.Conexao;
+import org.senai.model.Pessoa;
+
+public class PessoaDao {
+	//ADD
+	public boolean adicionar(Pessoa objP) {
+		String lsTecnologia = "";
+		for (String t : objP.getTecnologia()) {
+			lsTecnologia += t + ",";
+		}
+		try {
+			Connection cont = Conexao.conectar();
+
+			String sql = "insert into pessoa (nome, tel, nasc, email, sexo, tecnologia, escolaridade ) "
+					+ "values('" + objP.getNomeCompleto() + "', '" + objP.getTelefone() + "', '"
+					+ objP.getDtNascimento() + "', '" + objP.getEmail() + "', '" + objP.getSexo() + "', '"
+					+ lsTecnologia + "', '" + objP.getEscolaridade() + "') ";
+			PreparedStatement pst = cont.prepareStatement(sql);
+			pst.execute();
+			pst.close();
+			cont.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	//READ
+	public List<Pessoa> listaPessoa(){
+		List<Pessoa> ls = new ArrayList<>();
+		try {
+			Connection cont = Conexao.conectar();
+			PreparedStatement pst = cont.prepareStatement("select nome, email from pessoa");
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Pessoa p = new Pessoa();
+				p.setNomeCompleto(rs.getString("nome"));
+				p.setEmail(rs.getString("email"));	
+				ls.add(p);
+			}	
+			cont.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return ls;
+	}
+	
+	public Pessoa getPessoa(int id) {
+		Pessoa p = new Pessoa();
+		try {
+			Connection cont = Conexao.conectar();
+			PreparedStatement pst = cont.prepareStatement("select * from pessoas where id = ? ");
+			pst.setInt(1, id);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				p.setNomeCompleto(rs.getString("nome"));
+				p.setEmail(rs.getString("email"));
+				p.setTelefone(rs.getString("tel"));
+				p.setDtNascimento(rs.getString("nasc"));
+				p.setSexo(rs.getString("sexo"));
+				p.setTecnologia(rs.getString("tecnologia").split(","));
+				p.setEscolaridade(rs.getString("escolaridade"));
+				p.setId(rs.getInt("id"));
+			}
+			cont.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return p;
+	}
+
+	//UPDATE
+	public boolean alterar(Pessoa objP) {
+		String lsTecnologia = "";
+		for (String t : objP.getTecnologia()) {
+			lsTecnologia += t + ",";
+		}
+		try {
+			Connection cont = Conexao.conectar();
+
+			String sql = " update pessoas set "
+					+ "nome   = ?,"
+					+ "tel        = ?,"
+					+ "nasc   = ?,"
+					+ "email           = ?,"
+					+ "sexo            = ?,"
+					+ "tecnologia      = ?,"
+					+ "escolaridade    = ?"
+					+ "where "
+					+ "id				= ?";
+			
+			PreparedStatement pst = cont.prepareStatement(sql);
+			pst.setString(1, objP.getNomeCompleto());
+			pst.setString(2, objP.getTelefone());
+			pst.setString(3, objP.getDtNascimento());
+			pst.setString(4, objP.getEmail());
+			pst.setString(5, objP.getSexo());
+			pst.setString(6, lsTecnologia);
+			pst.setString(7,objP.getEscolaridade());  
+			pst.setInt(8, objP.getId());
+
+			pst.execute();
+			pst.close();
+			cont.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	//DELETE
+	public boolean apagar(int id) {
+		try {
+			Connection cont = Conexao.conectar();
+
+			String sql = " delete from pessoas where  id = ?";
+			
+			PreparedStatement pst = cont.prepareStatement(sql);  
+			pst.setInt(1, id);
+
+			pst.execute();
+			pst.close();
+			cont.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+//Heranca-> Model
+package org.senai.model;
+
+public class Pessoa {
+
+	private int id;
+	private String nome;
+	private String tel;
+	private String nasc;
+	private String email;
+	private String sexo;
+	private String[] tecnologia;
+	private String escolaridade;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNomeCompleto() {
+		return nome;
+	}
+
+	public void setNomeCompleto(String nome) {
+		this.nome = nome;
+	}
+
+	public String getTelefone() {
+		return tel;
+	}
+
+	public void setTelefone(String tel) {
+		this.tel = tel;
+	}
+
+	public String getDtNascimento() {
+		return nasc;
+	}
+
+	public void setDtNascimento(String nasc) {
+		this.nasc = nasc;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public String[] getTecnologia() {
+		return tecnologia;
+	}
+
+	public void setTecnologia(String[] tecnologia) {
+		this.tecnologia = tecnologia;
+	}
+
+	public String getEscolaridade() {
+		return escolaridade;
+	}
+
+	public void setEscolaridade(String escolaridade) {
+		this.escolaridade = escolaridade;
+	}
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//Saida de Dados
+<%@page import="org.senai.model.Pessoa"%>
+<%@page import="java.util.List"%>
+<%@page import="org.senai.dao.PessoaDao"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@ page import="java.sql.Connection"%>
+<%@ page import="org.senai.db.Conexao"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Listar Pessoas</title>
+</head>
+<body>
+
+	<%
+	try{
+	PessoaDao objDao = new PessoaDao();
+	List<Pessoa> ls = objDao.listaPessoa();
+	if (ls.size() > 0) {
+	%>
+	<table>
+		<tr>
+			<th>Nome</th>
+			<th>E-mail</th>
+		</tr>
+
+		<%
+		for (Pessoa p : ls) {
+		%>
+		<tr>
+			<td><%=p.getNomeCompleto()%></td>
+			<td><%=p.getEmail()%></td>
+		</tr>
+		<%
+		}
+		%>
+
+	</table>
+	<%
+	
+	}
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	%>
+</body>
+</html>
