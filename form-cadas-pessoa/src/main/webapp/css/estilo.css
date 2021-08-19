@@ -43,12 +43,23 @@ input, select {
     border-radius: 5px;
     float: right;
 }
+.bt3{
+	width: 100px;
+	border: 2px solid blueviolet;
+    background-color: white;
+    font-weight: bold;
+    color:blueviolet;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+}
 
 .bt:hover {
     cursor: pointer;
     background-color: blueviolet;
     color: white;
 }
+
 
 #img-java{
     float: right;

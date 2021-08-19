@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-	<body>
+
 	<%
 	Pessoa p = new Pessoa();
 	try {
@@ -93,6 +93,6 @@
 		
 	</script>
 	<br>
-	<a href="index.jsp" style="float: right;">Index</a>
+	<a href="index.jsp" class="bt3" style="float: right;">Index</a>
 </body>
 </html>

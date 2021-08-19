@@ -11,6 +11,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style type="text/css">
+	td{
+		border: 1px solid gray;
+		padding: 5px;
+	}
+</style>
 <title>Listar Pessoas</title>
 </head>
 <body>
@@ -47,6 +53,6 @@
 	}
 	%>
 	<br>
-	<a href="index.jsp" style="float: right;">Index</a>
+	<a href="index.jsp" class="bt3"style="float: right;">Index</a>
 </body>
 </html>
