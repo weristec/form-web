@@ -7,42 +7,29 @@
 <%@ page import="org.senai.db.Conexao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<style type="text/css">
-	td{
-		border: 1px solid gray;
-		padding: 5px;
-	}
-</style>
-<title>Listar Pessoas</title>
-</head>
-<body>
 
 	<%
 	PessoaDao objDao = new PessoaDao();
 	List<Pessoa> ls = objDao.listaPessoa();
 	if (ls.size() > 0) {
 	%>
-	<table>
+	<table id="estilo-tb">
 		<tr>
 			<th>ID</th>
 			<th>Nome</th>
 			<th>E-mail</th>
-			<th>Ação</th>
+<!-- 			<th>Ação</th>  -->
 		</tr>
 
 		<%
-		for (Pessoa p : ls) {
+		for (Pessoa ps : ls) {
 		%>
-		<tr>
-			<td><%=p.getId()%></td>
-			<td><%=p.getNomeCompleto()%></td>
-			<td><%=p.getEmail()%></td>
-			<td><a href="form-cadastro.jsp?id=<%=p.getId()%>" >Editar</a>
-			<a href="cadastro?acao=apagar&id=<%=p.getId()%>" >Apagar</a></td>
+		<tr  onclick="window.location.href = 'form-cadastro.jsp?id=<%=ps.getId()%>'">
+			<td><%=ps.getId()%></td>
+			<td><%=ps.getNomeCompleto()%></td>
+			<td><%=ps.getEmail()%></td>
+<%-- 			<td><a href="form-cadastro.jsp?id=<%=ps.getId()%>" >Editar</a>  --%>
+<%--  			<a href="cadastro?acao=apagar&id=<%=ps.getId()%>" >Apagar</a></td>  --%>
 		</tr>
 		<%
 		}
@@ -52,7 +39,3 @@
 	<%
 	}
 	%>
-	<br>
-	<a href="index.jsp" class="bt3"style="float: right;">Index</a>
-</body>
-</html>

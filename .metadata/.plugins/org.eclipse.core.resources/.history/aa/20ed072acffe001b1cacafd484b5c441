@@ -1,7 +1,0 @@
-import java.sql.Connection;
-
-public class conexao {
-	public static Connection conectar() {
-		
-	}
-}

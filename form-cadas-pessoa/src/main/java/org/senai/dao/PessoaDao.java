@@ -14,8 +14,10 @@ public class PessoaDao {
 	//ADD
 	public boolean adicionar(Pessoa objP) {
 		String lsTecnologia = "";
-		for (String t : objP.getTecnologia()) {
-			lsTecnologia += t + ",";
+		if (objP.getTecnologia() != null) {
+			for (String t : objP.getTecnologia()) {
+				lsTecnologia += t + ",";
+			}
 		}
 		try {
 			Connection cont = Conexao.conectar();
@@ -84,8 +86,10 @@ public class PessoaDao {
 	//UPDATE
 	public boolean alterar(Pessoa objP) {
 		String lsTecnologia = "";
-		for (String t : objP.getTecnologia()) {
-			lsTecnologia += t + ",";
+		if (objP.getTecnologia() != null) {
+			for (String t : objP.getTecnologia()) {
+				lsTecnologia += t + ",";
+			}
 		}
 		try {
 			Connection cont = Conexao.conectar();

@@ -122,7 +122,7 @@ public class CadastroServelet extends HttpServlet {
 		}
 
 		if (validar) {
-			res.sendRedirect("listaPessoas.jsp");
+			res.sendRedirect("form-cadastro.jsp");
 		} else {
 			PrintWriter saida = res.getWriter();
 			saida.println("<html>");

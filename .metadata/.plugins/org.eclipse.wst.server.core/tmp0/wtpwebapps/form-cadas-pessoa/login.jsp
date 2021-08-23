@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +13,7 @@
         <legend>ACESSAR</legend>
         <img id="img-java" src="img/java.png" alt="imagem java">
         <label for="login">Login:</label>
-        <input class="larguraTexto" type="text" name="login" id="login" placeholder="Digite seu login">
+        <input class="larguraTexto" type="text" name="login" id="login" placeholder="Digite seu login" autocomplete="off">
         <label for="senha">Senha:</label>
         <input class="larguraTexto" type="password" name="senha" id="senha" placeholder="Digite sua senha">
         <input type="submit" class="bt" value="Acessar">

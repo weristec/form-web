@@ -1,11 +1,11 @@
 <%@page import="org.senai.dao.PessoaDao"%>
 <%@page import="org.senai.model.Pessoa"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/estilo.css">
 
@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-
+	<%@ include file="menu.jsp"%>
 	<%
 	Pessoa p = new Pessoa();
 	try {
@@ -68,12 +68,24 @@
             <select name="escolaridade" id="escolaridade">
                 <option value="">Selecione</option>
                 <option value="Fundamental">Fundamental</option>
-                <option value="Ensino Médio">Ensino Médio</option>
+                <option value="Ensino MÃ©dio">Ensino MÃ©dio</option>
                 <option value="Superior">Superior</option>
-            </select>
-            
-            <input type="submit" class="bt" value="Enviar">
-            <input type="reset" class="bt" value="Limpar">
+            </select> 
+            <a class="bt" href="form-cadastro.jsp">Novo Cadastro</a>
+           
+            <%
+			if (p.getId() > 0) {
+			%>
+			<a class="bt" onclick="return confirm('VocÃª realmente quer apagar esse registro?');"
+				href="cadastro?id=<%=p.getId()%>&acao=apagar">Apagar</a>
+			<%
+			} else {
+			%>
+			<input type="reset" class="bt" value="Limpar">
+			<%
+			}
+			%>
+            <input type="submit" class="bt" value="Gravar">
         </fieldset>
     </form>
     <script type="text/javascript">
@@ -92,7 +104,8 @@
 	%>
 		
 	</script>
-	<br>
-	<a href="index.jsp" class="bt3" style="float: right;">Index</a>
+	<div id="tb">
+		<%@include file="listaPessoas.jsp" %>	
+	</div>
 </body>
 </html>

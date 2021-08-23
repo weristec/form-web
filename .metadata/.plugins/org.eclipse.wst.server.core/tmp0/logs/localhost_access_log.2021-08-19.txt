@@ -1,0 +1,9 @@
+127.0.0.1 - - [19/Aug/2021:18:49:17 -0300] "GET / HTTP/1.1" 404 751
+127.0.0.1 - - [19/Aug/2021:19:26:35 -0300] "GET / HTTP/1.1" 404 751
+0:0:0:0:0:0:0:1 - - [19/Aug/2021:19:27:17 -0300] "GET /form-cadas-pessoa/index.jsp HTTP/1.1" 200 374
+0:0:0:0:0:0:0:1 - - [19/Aug/2021:19:27:18 -0300] "GET /form-cadas-pessoa/css/estilo.css HTTP/1.1" 200 1110
+0:0:0:0:0:0:0:1 - - [19/Aug/2021:19:27:20 -0300] "GET /form-cadas-pessoa/form-cadastro.jsp HTTP/1.1" 200 3174
+0:0:0:0:0:0:0:1 - - [19/Aug/2021:19:27:20 -0300] "GET /form-cadas-pessoa/img/java.png HTTP/1.1" 200 39673
+0:0:0:0:0:0:0:1 - - [19/Aug/2021:19:27:32 -0300] "GET /form-cadas-pessoa/form-cadastro.jsp HTTP/1.1" 200 3174
+0:0:0:0:0:0:0:1 - - [19/Aug/2021:19:27:32 -0300] "GET /form-cadas-pessoa/css/estilo.css HTTP/1.1" 200 1110
+0:0:0:0:0:0:0:1 - - [19/Aug/2021:19:27:33 -0300] "GET /favicon.ico HTTP/1.1" 404 774
