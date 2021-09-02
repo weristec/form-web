@@ -3,11 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
+<%@ include file="menu.jsp"%>
     <fieldset>
     <form action="login" method="post">
         <legend>ACESSAR</legend>
@@ -18,6 +19,17 @@
         <input class="larguraTexto" type="password" name="senha" id="senha" placeholder="Digite sua senha">
         <input type="submit" class="bt" value="Acessar">
     </form>
+    	<%
+		String erro = request.getParameter("erro");
+		if (erro != null) {
+		%>
+			<script type="text/javascript">
+				alert("Login ou senha não encontrado");
+			</script>
+		<%
+		}
+		%>
     </fieldset>
+    
 </body>
 </html>

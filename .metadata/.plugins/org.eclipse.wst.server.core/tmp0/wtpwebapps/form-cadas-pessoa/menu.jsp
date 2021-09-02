@@ -1,3 +1,4 @@
+<%@page import="org.senai.model.Pessoa"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -27,5 +28,21 @@ li a:hover {
 <ul>
 	<li><a href="index.jsp">Home</a></li>
 	<li><a href="form-cadastro.jsp">Cadastro</a></li>
+	
+	<%
+	Pessoa usuario = (Pessoa) request.getSession().getAttribute("usuario");
+	boolean verLista = false;
+	if (usuario != null) {
+		verLista = true;
+	%>
+	<li><a href="login?acao=sair">Logout</a></li>
+	<span id="dadosUsuario">Bem vindo:<%=usuario.getNomeCompleto()%></span>
+	<li><a href="alterarSenha.jsp">Alterar senha</a></li>
+	<%
+	} else {
+	%>
 	<li><a href="login.jsp">Login</a></li>
+	<%
+	}
+	%>
 </ul>

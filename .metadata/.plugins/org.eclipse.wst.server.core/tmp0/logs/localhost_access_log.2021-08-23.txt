@@ -117,3 +117,5 @@
 0:0:0:0:0:0:0:1 - - [23/Aug/2021:20:10:45 -0300] "GET /form-cadas-pessoa/cadastro?id=0&nome=Tamyres+Alkimin&tel=6512457898&nasc=1993-06-21&email=ribeirowelton10%40gmail.com&sexo=f&tecnologia=html&tecnologia=css&escolaridade=Ensino+M%C3%A9dio HTTP/1.1" 302 -
 0:0:0:0:0:0:0:1 - - [23/Aug/2021:20:10:46 -0300] "GET /form-cadas-pessoa/form-cadastro.jsp HTTP/1.1" 200 4499
 0:0:0:0:0:0:0:1 - - [23/Aug/2021:20:10:46 -0300] "GET /form-cadas-pessoa/css/estilo.css HTTP/1.1" 304 -
+127.0.0.1 - - [23/Aug/2021:20:25:00 -0300] "GET / HTTP/1.1" 404 751
+0:0:0:0:0:0:0:1 - - [23/Aug/2021:20:26:17 -0300] "GET /form-cadas-pessoa/form-cadastro.jsp HTTP/1.1" 200 4499

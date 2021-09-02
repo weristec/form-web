@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-	<%@ include file="menu.jsp"%>
+	<%@include file="menu.jsp"%>
 	<%
 	Pessoa p = new Pessoa();
 	try {
@@ -50,6 +50,13 @@
             <input class="larguraTexto" type="email" id="email"
             	name="email" value="<%=p.getEmail()%>">
             
+            <label
+				for="estado">Unidade Federativa:
+			</label>	
+            <select id="uf" name="uf">
+				<option>Selecione</option>
+			</select>
+            
             <label for="sexo">Sexo:</label>
             <div class="bloco-inline">
                 <input type="radio" id="masc" name="sexo" value="m"> <label for="masc"> Masculino</label>
@@ -71,6 +78,7 @@
                 <option value="Ensino Médio">Ensino Médio</option>
                 <option value="Superior">Superior</option>
             </select> 
+            
             <a class="bt" href="form-cadastro.jsp">Novo Cadastro</a>
            
             <%
@@ -96,16 +104,55 @@
 			}
 		}
 		
-		document.getElementById("escolaridade").value = "<%=p.getEscolaridade()%>";
+		document.getElementById("escolaridade").value = '<%=p.getEscolaridade()%>';
 	<%
+	
 	for (String t : p.getTecnologia()) {
-	out.println("document.getElementById('" + t + "').setAttribute('checked', 'checked')");
+		if (!t.equals("")) {
+			out.println("document.getElementById('" + t + "').setAttribute('checked', 'checked')");
+		}
 	}
 	%>
+	
+	function acessarApi() {
+		const api = new XMLHttpRequest();
+		
+		api.setRequestHeader();
+		api.open("GET","https://servicodados.ibge.gov.br/api/v1/localidades/estados");
+		api.send();
+		api.onload = function() {
+			var dados = this.responseText;
+			dados = JSON.parse(dados);
+			
+			
+			dados.sort(function(a,b){
+				return a.nome < b.nome ? -1 : a.nome > b.nome ? 1 : 0;
+			});
+			var lsEstados = "<option value=''>Selecione</option>";
+			
+			for(i in dados){
+				var uf = dados[i].sigla;
+				var nome = dados[i].nome;
+				lsEstados += "<option value='"+uf+"'>"+nome+"</option>";
+			}
+		
+			var estado = document.getElementById("uf");
+			estado.innerHTML = lsEstados;
+			if('<%=p.getEstado()%>' != 'null')
+			document.getElementById("uf").value = '<%=p.getEstado()%>';
+		}
+	}
+	acessarApi();
 		
 	</script>
+	<%
+	if (verLista) {
+	%>
 	<div id="tb">
 		<%@include file="listaPessoas.jsp" %>	
 	</div>
+	<%
+	}
+	%>
 </body>
 </html>

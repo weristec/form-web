@@ -1,4 +1,4 @@
-package org.senai.model;
+	package org.senai.model;
 
 public class Pessoa {
 
@@ -10,6 +10,8 @@ public class Pessoa {
 	private String sexo = "";
 	private String[] tecnologia = {""};
 	private String escolaridade = "";
+	private String estado = "";
+	private String senha = "";
 
 	public int getId() {
 		return id;
@@ -73,6 +75,22 @@ public class Pessoa {
 
 	public void setEscolaridade(String escolaridade) {
 		this.escolaridade = escolaridade;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }
