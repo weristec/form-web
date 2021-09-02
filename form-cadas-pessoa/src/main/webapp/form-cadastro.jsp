@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="org.senai.dao.PessoaDao"%>
 <%@page import="org.senai.model.Pessoa"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -21,10 +22,16 @@
 	<%@include file="menu.jsp"%>
 	<%
 	Pessoa p = new Pessoa();
+	String dt = "";
 	try {
 		int id = Integer.parseInt(request.getParameter("id"));
 		PessoaDao dao = new PessoaDao();
 		p = dao.getPessoa(id);
+		
+		if(p.getDtNascimento() != null){
+			SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+			dt = s.format(p.getDtNascimento().getTime());
+		}
 	} catch (Exception e) {
 	}
 	//out.print(id);
@@ -42,7 +49,7 @@
             <input class="larguraTexto" type="text" placeholder="(61)9.9999-9999"
             	 id="tel" name="tel" value="<%=p.getTelefone()%>">
             	 
-            <label for="dtNascimento">Data de Nascimento:</label>
+            <label for="nasc">Data de Nascimento:</label>
             <input class="larguraTexto" type="date" 
             	 id="nasc" name="nasc" value="<%=p.getDtNascimento()%>"> 
             
@@ -51,7 +58,7 @@
             	name="email" value="<%=p.getEmail()%>">
             
             <label
-				for="estado">Unidade Federativa:
+				for="uf">Unidade Federativa:
 			</label>	
             <select id="uf" name="uf">
 				<option>Selecione</option>
@@ -84,8 +91,7 @@
             <%
 			if (p.getId() > 0) {
 			%>
-			<a class="bt" onclick="return confirm('Você realmente quer apagar esse registro?');"
-				href="cadastro?id=<%=p.getId()%>&acao=apagar">Apagar</a>
+			<input class="bt" value="Apagar" onclick="apagar(<%=p.getId()%>)">
 			<%
 			} else {
 			%>
@@ -93,7 +99,7 @@
 			<%
 			}
 			%>
-            <input type="submit" class="bt" value="Gravar">
+            <input type="button" class="bt" value="Gravar" onclick="enviarDados()">
         </fieldset>
     </form>
     <script type="text/javascript">
@@ -117,7 +123,6 @@
 	function acessarApi() {
 		const api = new XMLHttpRequest();
 		
-		api.setRequestHeader();
 		api.open("GET","https://servicodados.ibge.gov.br/api/v1/localidades/estados");
 		api.send();
 		api.onload = function() {
@@ -143,6 +148,53 @@
 		}
 	}
 	acessarApi();
+	
+	function enviarDados(){
+		var id	= document.querySelector("#id").value;
+		var nomecompleto = document.querySelector("#nome").value;
+		var telefone = document.querySelector("#tel").value;
+		var dtNascimento = document.querySelector("#nasc").value;
+		var email = document.querySelector("#email").value;
+		var sexo = document.querySelector("[name='sexo']").value;
+		var escolaridade = document.querySelector("#escolaridade").value;
+		
+		var lst = document.querySelectorAll('[name="tecnologia"]:checked');
+		var tecnologia = "";
+		for(let i = 0; i < lst.length; i++){
+			tecnologia += lst[i].value+",";
+		}
+		
+		var out = "id=$id&nomecompleto=$nomecompleto&telefone=$telefone&dtNascimento=$dtNascimento&email=$email&sexo=$sexo&escolaridade=$escolaridade&tecnologia=$tecnologia";
+		out = out.replace("$id",id);
+		out = out.replace("$nome",nomecompleto);
+		out = out.replace("$tel",telefone);
+		out = out.replace("$nasc",dtNascimento);
+		out = out.replace("$email",email);
+		out = out.replace("$sexo",sexo);
+		out = out.replace("$escolaridade",escolaridade);
+		out = out.replace("$tecnologia",tecnologia);
+		acessarApiServlet(out);
+		
+		
+	}
+	
+	function apagar(id){
+		if(confirm('Você realmente quer apagar esse registro?')){
+			acessarApiServlet("id="+id+"&acao=apagar");
+		}
+	}
+	
+	function acessarApiServlet(parametros) {
+		const api = new XMLHttpRequest();
+		// ?orderBy=nome
+		api.open("GET","cadastroServlet?"+parametros);
+		api.send();
+		api.onload = function() {
+			var dados = this.responseText;
+			dados = JSON.parse(dados);
+			document.querySelector("#msg").innerHTML = dados.msg;
+		}
+	}
 		
 	</script>
 	<%

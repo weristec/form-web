@@ -2,9 +2,11 @@ package org.senai.dao;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.senai.db.Conexao;
@@ -23,11 +25,11 @@ public class PessoaDao {
 			Connection cont = Conexao.conectar();
 
 			String sql = "insert into pessoa (nome, tel, nasc, email, sexo, tecnologia, escolaridade, uf, senha ) "
-					+ "values(?,?,?,?,?,?,?,?,'123') ";
+					+ "values(?,?,?,?,?,?,?,?'123') ";
 			PreparedStatement pst = cont.prepareStatement(sql);		
 			pst.setString(1, objP.getNomeCompleto());
 			pst.setString(2, objP.getTelefone());
-			pst.setString(3, objP.getDtNascimento());
+			pst.setDate(3, new Date(objP.getDtNascimento().getTimeInMillis()));
 			pst.setString(4, objP.getEmail());
 			pst.setString(5, objP.getSexo());
 			pst.setString(6, lsTecnologia);
@@ -56,6 +58,9 @@ public class PessoaDao {
 				p.setNomeCompleto(rs.getString("nome"));
 				p.setEmail(rs.getString("email"));
 				p.setId(rs.getInt("id"));
+				Calendar c = Calendar.getInstance();
+				c.setTime(rs.getDate("nasc"));
+				p.setDtNascimento(c);				
 				ls.add(p);
 			}
 			cont.close();
@@ -63,6 +68,25 @@ public class PessoaDao {
 			e.printStackTrace();
 		}
 		return ls;
+	}
+	
+	public boolean verificarEmail(String email) {
+		try {
+			Connection cont = Conexao.conectar();
+			PreparedStatement pst = cont.prepareStatement("select count(*) quantidade from pessoa where email = ? ");
+			pst.setString(1, email);
+			ResultSet rs = pst.executeQuery();
+			rs.next();
+			cont.close();
+			if(rs.getInt("quantidade") == 0) {
+				return true;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 	
 	public Pessoa getPessoa(int id) {
@@ -76,7 +100,10 @@ public class PessoaDao {
 				p.setNomeCompleto(rs.getString("nome"));
 				p.setEmail(rs.getString("email"));
 				p.setTelefone(rs.getString("tel"));
-				p.setDtNascimento(rs.getString("nasc"));
+				Calendar	data	=	Calendar.getInstance();
+				data.setTime(rs.getDate("nasc"));
+				
+				p.setDtNascimento(data);
 				p.setSexo(rs.getString("sexo"));
 				p.setTecnologia(rs.getString("tecnologia").split(","));
 				p.setEscolaridade(rs.getString("escolaridade"));
@@ -119,7 +146,7 @@ public class PessoaDao {
 			PreparedStatement pst = cont.prepareStatement(sql);
 			pst.setString(1, objP.getNomeCompleto());
 			pst.setString(2, objP.getTelefone());
-			pst.setString(3, objP.getDtNascimento());
+			pst.setDate(3, new Date(objP.getDtNascimento().getTimeInMillis()));
 			pst.setString(4, objP.getEmail());
 			pst.setString(5, objP.getSexo());
 			pst.setString(6, lsTecnologia);

@@ -1,11 +1,13 @@
 	package org.senai.model;
 
+import java.util.Calendar;
+
 public class Pessoa {
 
 	private int id;
 	private String nome = "";
 	private String tel = "";
-	private String nasc = "";
+	private Calendar nasc;
 	private String email = "";
 	private String sexo = "";
 	private String[] tecnologia = {""};
@@ -37,11 +39,11 @@ public class Pessoa {
 		this.tel = tel;
 	}
 
-	public String getDtNascimento() {
+	public Calendar getDtNascimento() {
 		return nasc;
 	}
 
-	public void setDtNascimento(String nasc) {
+	public void setDtNascimento(Calendar nasc) {
 		this.nasc = nasc;
 	}
 
