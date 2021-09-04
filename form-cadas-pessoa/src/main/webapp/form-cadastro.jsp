@@ -36,9 +36,13 @@
 	}
 	//out.print(id);
 	%>
+	
     <form action="cadastro">
-    <input type="hidden" name="id" value="<%=p.getId()%>">
+    <div id="msg" style="text-align: center; padding-top: 10px;" ></div>
+    <input type="hidden" name="id" id="id" value="<%=p.getId()%>">
         <fieldset>
+        
+        <!-- ENTRADA DE DADOS PARA CadastroServlet-->
             <legend>CADASTRO</legend>
             <img id="img-java" src="img/java.png" alt="imagem java">
             <label for="nome">Nome Completo:</label>
@@ -85,7 +89,8 @@
                 <option value="Ensino Médio">Ensino Médio</option>
                 <option value="Superior">Superior</option>
             </select> 
-            
+        
+          <!-- Botões -->  
             <a class="bt" href="form-cadastro.jsp">Novo Cadastro</a>
            
             <%
@@ -101,7 +106,10 @@
 			%>
             <input type="button" class="bt" value="Gravar" onclick="enviarDados()">
         </fieldset>
+        
     </form>
+    
+    <!-- Scripts -->
     <script type="text/javascript">
 		var lsSexo = document.getElementsByName("sexo");
 		for (i in lsSexo) {
