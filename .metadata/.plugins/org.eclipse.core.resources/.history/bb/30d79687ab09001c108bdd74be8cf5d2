@@ -1,7 +1,0 @@
-package org.senai.servlet;
-
-import javax.servlet.http.HttpServlet;
-
-public class AlterarSenha extends HttpServlet {
-
-}

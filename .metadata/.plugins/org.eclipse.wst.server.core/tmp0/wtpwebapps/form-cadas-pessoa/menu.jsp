@@ -1,4 +1,4 @@
-<%@page import="org.senai.model.Pessoa"%>
+<%@page import="org.senai.model.Painel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -30,11 +30,11 @@ li a:hover {
 	<li><a href="form-cadastro.jsp">Cadastro</a></li>
 	
 	<%
-	Pessoa usuario = (Pessoa) request.getSession().getAttribute("usuario");
-	boolean verLista = false;
-	if (usuario != null) {
-		verLista = true;
-	%>
+		Painel usuario = (Painel) request.getSession().getAttribute("usuario");
+			boolean verLista = false;
+			if (usuario != null) {
+				verLista = true;
+		%>
 	<li><a href="login?acao=sair">Logout</a></li>
 	<span id="dadosUsuario">Bem vindo:<%=usuario.getNomeCompleto()%></span>
 	<li><a href="alterarSenha.jsp">Alterar senha</a></li>

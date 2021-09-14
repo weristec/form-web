@@ -1,4 +1,4 @@
-	package org.senai.model;
+package org.senai.model;
 
 import java.util.Calendar;
 

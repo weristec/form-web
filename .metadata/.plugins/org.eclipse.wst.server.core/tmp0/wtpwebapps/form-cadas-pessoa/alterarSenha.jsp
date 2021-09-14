@@ -18,7 +18,7 @@
         <legend id="msg" name="msg">Altere sua senha</legend>
         <img id="img-java" src="img/java.png" alt="imagem java">
         <label for="senhaAtual">Senha Atual</label>
-        <input class="larguraTexto" type="password" name="senhaAtual" id="senhaAtual" autocomplete="off">
+        <input class="larguraTexto" type="password" name="senhaAtual" id="senhaAtual">
         <label for="novaSenha">Nova Senha:</label>
         <input class="larguraTexto" type="password" name="novaSenha" id="novaSenha">
         <label for="confSenha">Confirmar Senha:</label>

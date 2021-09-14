@@ -1,6 +1,7 @@
 package org.senai.servlet;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -28,7 +29,7 @@ public class AlterarSenha extends HttpServlet {
 			PessoaDao dao = new PessoaDao();
 			dao.alterarSenha(p);
 			
-			out.print("Ok para alterar a senha.");
+			out.print("Senha alterada com sucesso. ");
 		}else {
 			
 			out.print("Não foi possível aterar a senha");

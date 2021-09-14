@@ -1,7 +1,7 @@
 package org.senai.dao;
 
-import java.io.PrintWriter;
 import java.sql.Connection;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +18,7 @@ public class PessoaDao {
 		String lsTecnologia = "";
 		if (objP.getTecnologia() != null) {
 			for (String t : objP.getTecnologia()) {
-				lsTecnologia += t + ",";
+				lsTecnologia += t + " ,";
 			}
 		}
 		try {
@@ -70,6 +70,7 @@ public class PessoaDao {
 		return ls;
 	}
 	
+	//Tratamento de redundancia
 	public boolean verificarEmail(String email) {
 		try {
 			Connection cont = Conexao.conectar();
@@ -89,6 +90,7 @@ public class PessoaDao {
 		return false;
 	}
 	
+	//Selecionar um registro específico
 	public Pessoa getPessoa(int id) {
 		Pessoa p = new Pessoa();
 		try {

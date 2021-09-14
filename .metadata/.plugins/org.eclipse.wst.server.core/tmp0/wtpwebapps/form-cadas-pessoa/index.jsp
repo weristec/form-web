@@ -9,6 +9,6 @@
 </head>
 <body>
 <%@ include file="menu.jsp"%>
-Sistema para cadastrar pessoas.
+<div id="corpo">Sistema para cadastrar pessoas.</div>
 </body>
 </html>

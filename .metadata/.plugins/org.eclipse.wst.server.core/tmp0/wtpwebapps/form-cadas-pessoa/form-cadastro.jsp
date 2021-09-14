@@ -1,6 +1,6 @@
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.senai.dao.PessoaDao"%>
-<%@page import="org.senai.model.Pessoa"%>
+<%@page import="org.senai.dao.PainelDao"%>
+<%@page import="org.senai.model.Painel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -21,24 +21,28 @@
 <body>
 	<%@include file="menu.jsp"%>
 	<%
-	Pessoa p = new Pessoa();
-	String dt = "";
-	try {
+	Painel p = new Painel();
+			String dt = "";
+			try {
 		int id = Integer.parseInt(request.getParameter("id"));
-		PessoaDao dao = new PessoaDao();
+		PainelDao dao = new PainelDao();
 		p = dao.getPessoa(id);
 		
 		if(p.getDtNascimento() != null){
 			SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
 			dt = s.format(p.getDtNascimento().getTime());
 		}
-	} catch (Exception e) {
-	}
-	//out.print(id);
+			} catch (Exception e) {
+			}
+			//out.print(id);
 	%>
-    <form action="cadastro">
-    <input type="hidden" name="id" value="<%=p.getId()%>">
+	
+    <form action="cadastroServlet">
+    <div id="msg" style="text-align: center; padding-top: 10px;" ></div>
+    <input type="hidden" name="id" id="id" value="<%=p.getId()%>">
         <fieldset>
+        
+        <!-- ENTRADA DE DADOS PARA CadastroServlet-->
             <legend>CADASTRO</legend>
             <img id="img-java" src="img/java.png" alt="imagem java">
             <label for="nome">Nome Completo:</label>
@@ -47,18 +51,18 @@
                 
             <label for="telefone">Telefone:</label>
             <input class="larguraTexto" type="text" placeholder="(61)9.9999-9999"
-            	 id="tel" name="tel" value="<%=p.getTelefone()%>">
+            	 id="tel" name="tel" required="required" value="<%=p.getTelefone()%>">
             	 
             <label for="nasc">Data de Nascimento:</label>
             <input class="larguraTexto" type="date" 
-            	 id="nasc" name="nasc" value="<%=p.getDtNascimento()%>"> 
+            	 id="nasc" name="nasc" required="required" value="<%=dt%>"> 
             
             <label for="email">E-mail:</label>
             <input class="larguraTexto" type="email" id="email"
             	name="email" value="<%=p.getEmail()%>">
             
             <label
-				for="uf">Unidade Federativa:
+				for="uf">Estado:
 			</label>	
             <select id="uf" name="uf">
 				<option>Selecione</option>
@@ -85,13 +89,14 @@
                 <option value="Ensino Médio">Ensino Médio</option>
                 <option value="Superior">Superior</option>
             </select> 
-            
+        
+          <!-- Botões -->  
             <a class="bt" href="form-cadastro.jsp">Novo Cadastro</a>
            
             <%
-			if (p.getId() > 0) {
-			%>
-			<input class="bt" value="Apagar" onclick="apagar(<%=p.getId()%>)">
+                       if (p.getId() > 0) {
+                       %>
+			<input type="button" "bt" value="Apagar" onclick="apagar(<%=p.getId()%>)">
 			<%
 			} else {
 			%>
@@ -101,7 +106,10 @@
 			%>
             <input type="button" class="bt" value="Gravar" onclick="enviarDados()">
         </fieldset>
+        
     </form>
+    
+    <!-- Scripts -->
     <script type="text/javascript">
 		var lsSexo = document.getElementsByName("sexo");
 		for (i in lsSexo) {
@@ -111,14 +119,11 @@
 		}
 		
 		document.getElementById("escolaridade").value = '<%=p.getEscolaridade()%>';
-	<%
-	
-	for (String t : p.getTecnologia()) {
+	<%for (String t : p.getTecnologia()) {
 		if (!t.equals("")) {
 			out.println("document.getElementById('" + t + "').setAttribute('checked', 'checked')");
 		}
-	}
-	%>
+	}%>
 	
 	function acessarApi() {
 		const api = new XMLHttpRequest();
@@ -164,7 +169,7 @@
 			tecnologia += lst[i].value+",";
 		}
 		
-		var out = "id=$id&nomecompleto=$nomecompleto&telefone=$telefone&dtNascimento=$dtNascimento&email=$email&sexo=$sexo&escolaridade=$escolaridade&tecnologia=$tecnologia";
+		var out = "id=$id&nome=$nome&tel=$tel&nasc=$nasc&email=$email&sexo=$sexo&escolaridade=$escolaridade&tecnologia=$tecnologia";
 		out = out.replace("$id",id);
 		out = out.replace("$nome",nomecompleto);
 		out = out.replace("$tel",telefone);
