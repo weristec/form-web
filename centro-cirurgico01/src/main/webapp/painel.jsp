@@ -62,21 +62,7 @@
 		</tbody>
 	</table>
 <%}%>
-<script type="text/javascript">
-	function mudaCor() {
-		var status = document.getElementeById("st").value;
-		switch (status) {
-		case 'operatorio':
-			document.getElementeById("st").style.background="'#fbd972'";
-		case 'sala-cirurgica':
-			document.getElementeById("st").style.background='#fd5766';
-		case 'recuperacao':
-			document.getElementeById("st").style.background='#89e89f';
-		case 'transferido':
-			document.getElementeById("st").style.background='#b8daff';
-	}
-}
-	mudaCor();
+
 </script>
 </body>
 </html>

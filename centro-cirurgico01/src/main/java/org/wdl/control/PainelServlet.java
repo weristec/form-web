@@ -2,6 +2,7 @@ package org.wdl.control;
 
 import java.io.IOException;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,7 +52,7 @@ public class PainelServlet extends HttpServlet {
 				
 				pDao.adicionar(p1);
 			}
-			res.sendRedirect("gerenciar-painel.jsp");
+			res.sendRedirect("gerenciar-painel01.jsp");
 			System.out.println("Gravado!");
 		}
 		

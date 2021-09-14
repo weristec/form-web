@@ -197,7 +197,7 @@
 					 <input type="time" class="form-control" id="fim-cirurgia" 	name="fim-cirurgia" size="20">
 				</div>
 				<div class="form-group  col-md-3">
-					<label for="inicio-previsto">Saída Previsto:</label>
+					<label for="inicio-previsto">Saída Prevista:</label>
 					 <input type="time" class="form-control" id="saida-prevista"name="saida-prevista" size="20">
 				</div>
 			</div>
@@ -230,7 +230,7 @@
 			%>		
 					<tr onclick='preparaEdicao(<%=p1.getId() %>, "<%=p1.getNomePaciente() %>", "<%=p1.getStatus() %>", "<%=p1.getLocal() %>", "<%=p1.getInicioPrevisto()%>", "<%=p1.getInicioCirurgia()%>", "<%=p1.getFimCirurgia()%>", "<%=p1.getSaidaPrevista()%>")'>
 						<td><%=p1.getNomePaciente() %></td>
-						<td><%=p1.getStatus()%></td>
+						<td style="background-color: <%=p1.mudaCor()%>"><%=p1.getStatus()%></td>
 						<td><%=p1.getLocal()%></td>
 						<td><%=p1.getInicioPrevisto()%></td>
 						<td><%=p1.getInicioCirurgia()%></td>

@@ -59,4 +59,25 @@ public class Painel {
 		this.saidaPrevista = saidaPrevista;
 	}
 	
+	public String mudaCor() {
+		switch (status) {
+		case "operatorio":
+			return "#fbd972";
+			
+		case "sala-cirurgica":
+			return "#fd5766";
+			
+		case "recuperacao":
+			return "#89e89f";
+				 
+			
+		case "transferido":
+			return "#b8daff";
+		}
+		
+		return "";
+	}
+	
 }
+	
+

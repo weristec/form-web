@@ -5,7 +5,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
 <ul>
 	<li><a href="painel.jsp">Home</a></li>
-	<li><a href="gerenciar-painel.jsp">Cadastro</a></li>
+	<li><a href="gerenciar-painel01.jsp">Cadastro</a></li>
 
 	<%
 	Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
