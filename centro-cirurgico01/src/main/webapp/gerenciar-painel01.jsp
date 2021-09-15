@@ -204,7 +204,6 @@
 			<button type="button" class="btn btn-secondary" onclick="limpaForm()">Novo</button>
 			<button type="submit" class="btn btn-primary" onclick="gravar(event)">Gravar</button>
 			<button type="button" class="btn btn-danger" onclick="apagar()">Apagar</button>
-			<a href="painel.jsp">Home</a>
 <!-- 				<a class="btn btn-danger" onclick="apagar()" href="">Apagar</a> -->
 		</form>
 

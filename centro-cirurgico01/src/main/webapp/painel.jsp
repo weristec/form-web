@@ -5,6 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<meta http-equiv="refresh" content="10">
 <title>Centro Cirúrgico</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
@@ -51,7 +52,7 @@
 			<% for(Painel ps : ls){ %>
 					<tr>
 						<td><%=ps.getNomePaciente() %></td>
-						<td id="st" value="<%=ps.getStatus()%>"><%=ps.getStatus()%></td>
+						<td id="st" style="background-color: <%=ps.mudaCor()%>"><%=ps.getStatus()%></td>
 						<td><%=ps.getLocal()%></td>
 						<td><%=ps.getInicioPrevisto()%></td>
 						<td><%=ps.getInicioCirurgia()%></td>

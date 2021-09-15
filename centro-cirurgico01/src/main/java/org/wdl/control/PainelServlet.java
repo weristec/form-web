@@ -37,7 +37,7 @@ public class PainelServlet extends HttpServlet {
 				p1.setInicioPrevisto(req.getParameter("inicio-previsto"));
 				p1.setInicioCirurgia(req.getParameter("inicio-cirurgia"));
 				p1.setFimCirurgia(req.getParameter("fim-cirurgia"));
-				p1.setSaidaPrevista(req.getParameter("saida-previsto"));
+				p1.setSaidaPrevista(req.getParameter("saida-prevista"));
 				
 				pDao.alterar(p1);
 				
@@ -48,12 +48,11 @@ public class PainelServlet extends HttpServlet {
 				p1.setInicioPrevisto(req.getParameter("inicio-previsto"));
 				p1.setInicioCirurgia(req.getParameter("inicio-cirurgia"));
 				p1.setFimCirurgia(req.getParameter("fim-cirurgia"));
-				p1.setSaidaPrevista(req.getParameter("saida-previsto"));
+				p1.setSaidaPrevista(req.getParameter("saida-prevista"));
 				
 				pDao.adicionar(p1);
 			}
 			res.sendRedirect("gerenciar-painel01.jsp");
-			System.out.println("Gravado!");
 		}
 		
 
