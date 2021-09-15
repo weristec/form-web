@@ -95,30 +95,6 @@
 
 		}
 
-		function status(status) {
-			switch (status) {
-			case 'operatorio':
-				return {
-					label : 'Pré-Operatório',
-					cor : '#fbd972'
-				};
-			case 'sala-cirurgica':
-				return {
-					label : 'Em sala cirúrgica',
-					cor : '#fd5766'
-				};
-			case 'recuperacao':
-				return {
-					label : 'Em recuperação',
-					cor : '#89e89f'
-				};
-			case 'transferido':
-				return {
-					label : 'Transferído',
-					cor : '#b8daff'
-				};
-			}
-		}
 
 		/*function atualizarTabela() {
 		var tabela = ""; 

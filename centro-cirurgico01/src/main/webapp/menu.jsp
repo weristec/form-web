@@ -1,7 +1,7 @@
 <%@page import="org.wdl.model.Usuario"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+<div class="container mb-3">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 <div class="container-fluid">
 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -32,3 +32,4 @@
 </ul>
 </div>
 </nav>
+</div>	

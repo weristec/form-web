@@ -9,6 +9,7 @@
 </head>
 <body>
 <%@ include file="menu.jsp"%>
+<div class="container">
 <form action="cadastroServlet" method="post">
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">@</span>
@@ -28,5 +29,6 @@
 </div>
 <input type="submit" value="Cadastrar">
 </form>
+</div>
 </body>
 </html>

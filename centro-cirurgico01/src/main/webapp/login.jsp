@@ -11,6 +11,7 @@
 <div class="container">
 <div class="form-row">
 	<%@ include file="menu.jsp"%>
+	<div class="container "></div>
 		<form action="loginservlet" method="post">
 			<img id="img-java" src="img/Bandeira_do_Distrito_Federal_Brasil.png" 
 			width=100px; height=100px; style="float:right;"> 
@@ -24,7 +25,7 @@
 			placeholder="Digite sua senha"> 
 			<input type="submit" class="bt" value="Acessar">
 		</form>
-
+	</div>
 		<%
 		String erro = request.getParameter("erro");
 		if (erro != null) {

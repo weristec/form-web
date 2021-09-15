@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="10">
+	<meta http-equiv="refresh" content="60">
 <title>Centro Cirúrgico</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
